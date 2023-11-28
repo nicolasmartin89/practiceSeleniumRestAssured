@@ -1,14 +1,10 @@
 package tests;
 
-import dev.failsafe.internal.util.Assert;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -17,10 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SWApiTest {
     /**
      * Test the endpoint people/2/ and check the success response,
-     * the skin color to be gold, and the amount of films it appears on (should be 6).
+     * the skin color to be gold, and the amount of films it appears on (should be
+     * 6).
      */
     @Test
-    public void swapiExc1(){
+    public void swapiExc1() {
         Response response;
         response = given().get("https://swapi.dev/api/people/2/");
 
@@ -42,7 +39,7 @@ public class SWApiTest {
      * vehicles and species, each element including more than 1 element.
      */
     @Test
-    public void swapiExc2(){
+    public void swapiExc2() {
         Response response;
         response = given().get("https://swapi.dev/api/people/2/");
         List<String> films = response.path("films");
@@ -52,9 +49,7 @@ public class SWApiTest {
         responseSecondMovie = given().get(secondMovie);
         String releaseDateMovie = responseSecondMovie.path("release_date");
 
-
-        assert isValidDateFormat (releaseDateMovie, "yyyy-MM-dd");
-
+        assert isValidDateFormat(releaseDateMovie, "yyyy-MM-dd");
 
     }
 
@@ -66,6 +61,7 @@ public class SWApiTest {
             return false;
         }
     }
+
     private void assertHasMultipleElements(Response response, String elementName) {
         List<Object> elements = response.path(elementName);
         assert elements.size() > 1 : "Expected more than 1 " + elementName;
